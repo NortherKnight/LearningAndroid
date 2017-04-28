@@ -2,6 +2,7 @@ package com.example.dominik.learningandroid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity
     private ListView list;
 
     public static final String URL = "http://api.github.com/";
+    public static final String DEBUG = "LEARNING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
