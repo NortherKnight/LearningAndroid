@@ -1,4 +1,4 @@
-package com.example.dominik.learningandroid;
+package com.example.dominik.learningandroid.modules;
 
 import java.util.List;
 

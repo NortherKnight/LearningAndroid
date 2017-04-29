@@ -1,10 +1,14 @@
-package com.example.dominik.learningandroid;
+package com.example.dominik.learningandroid.basic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.dominik.learningandroid.modules.GitHubClient;
+import com.example.dominik.learningandroid.modules.GitHubRepo;
+import com.example.dominik.learningandroid.modules.GitHubRepoAdapter;
+import com.example.dominik.learningandroid.R;
 
 import java.util.List;
 
@@ -20,7 +24,6 @@ public class MainActivity extends AppCompatActivity
     private ListView list;
 
     public static final String URL = "http://api.github.com/";
-    public static final String DEBUG = "LEARNING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

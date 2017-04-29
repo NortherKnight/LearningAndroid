@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dominik.learningandroid.MainActivity">
+    tools:context="com.example.dominik.learningandroid.basic.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
         android:orientation="vertical" >
 
         <ExpandableListView
+            android:id="@+id/expandableListView_sectionList"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"/>

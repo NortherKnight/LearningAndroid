@@ -1,4 +1,4 @@
-package com.example.dominik.learningandroid;
+package com.example.dominik.learningandroid.modules;
 
 /**
  * Created by HP on 28/04/2017.
