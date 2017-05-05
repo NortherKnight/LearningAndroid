@@ -2,10 +2,12 @@ package com.example.dominik.learningandroid.basic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.dominik.learningandroid.modules.GitHubClient;
@@ -13,8 +15,6 @@ import com.example.dominik.learningandroid.modules.GitHubRepo;
 import com.example.dominik.learningandroid.modules.GitHubRepoAdapter;
 import com.example.dominik.learningandroid.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,13 +27,11 @@ public class MainActivity extends AppCompatActivity
 {
 
     private ListView list;
-    private ExpandableListView sectionList;
-    private ExpandableListAdapter adapter;
-
-    private List<String> titleList;
-    private HashMap<String, List<String>> detailHash;
+    private Spinner spinner;
+    private String[] modules = {"Retrofit GET request", "Retrofit POST request"};
 
     public static final String URL = "http://api.github.com/";
+    public static final String DEBUG = "LEARNING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,26 +39,22 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sectionList = (ExpandableListView)findViewById(R.id.expandableListView_sectionList);
-
-        titleList = new ArrayList<>();
-        titleList.add("Modules");
-        detailHash = new HashMap<>();
-        List<String> modules = new ArrayList<>();
-        modules.add("Retrofit GET request");
-        detailHash.put(titleList.get(0), modules);
-
-        adapter = new CustomExpandableListAdapter(this, titleList, detailHash);
-        sectionList.setAdapter(adapter);
-        sectionList.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+        spinner = (Spinner)findViewById(R.id.spinner_moduleSelect);
+        spinner.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+                           R.layout.support_simple_spinner_dropdown_item, modules));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-                                        int childPosition, long id)
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                Toast.makeText(getApplicationContext(), detailHash.get(titleList.get(groupPosition))
-                              .get(childPosition), Toast.LENGTH_SHORT);
-                return false;
+                Log.d(DEBUG, modules[position]);
+                Toast.makeText(MainActivity.this, modules[position], Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
             }
         });
 

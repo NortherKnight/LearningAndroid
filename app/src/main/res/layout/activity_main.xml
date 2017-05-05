@@ -9,18 +9,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <ExpandableListView
-            android:id="@+id/expandableListView_sectionList"
+        <Spinner
+            android:id="@+id/spinner_moduleSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/listView_repos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
