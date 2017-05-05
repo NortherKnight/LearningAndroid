@@ -13,98 +13,89 @@ import com.example.dominik.learningandroid.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class CustomExpandableListAdapter extends BaseExpandableListAdapter
-{
+public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
+
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
 
     public CustomExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail)
-    {
+                                       HashMap<String, List<String>> expandableListDetail) {
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
 
     @Override
-    public int getGroupCount()
-    {
-        return expandableListTitle.size();
+    public Object getChild(int listPosition, int expandedListPosition) {
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
+                .get(expandedListPosition);
     }
 
     @Override
-    public int getChildrenCount(int groupPosition)
-    {
-        return expandableListDetail.get(expandableListTitle.get(groupPosition)).size();
+    public long getChildId(int listPosition, int expandedListPosition) {
+        return expandedListPosition;
     }
 
     @Override
-    public Object getGroup(int groupPosition)
-    {
-        return expandableListTitle.get(groupPosition);
+    public View getChildView(int listPosition, final int expandedListPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
+        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_item, null);
+        }
+        TextView expandedListTextView = (TextView) convertView
+                .findViewById(R.id.expandedListItem);
+        expandedListTextView.setText(expandedListText);
+        return convertView;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition)
-    {
-        return expandableListDetail.get(this.expandableListTitle.get(groupPosition)).get(childPosition);
+    public int getChildrenCount(int listPosition) {
+        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
+                .size();
     }
 
     @Override
-    public long getGroupId(int groupPosition)
-    {
-        return groupPosition;
+    public Object getGroup(int listPosition) {
+        return this.expandableListTitle.get(listPosition);
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition)
-    {
-        return childPosition;
+    public int getGroupCount() {
+        return this.expandableListTitle.size();
     }
 
     @Override
-    public boolean hasStableIds()
-    {
+    public long getGroupId(int listPosition) {
+        return listPosition;
+    }
+
+    @Override
+    public View getGroupView(int listPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        String listTitle = (String) getGroup(listPosition);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) this.context.
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.list_group, null);
+        }
+        TextView listTitleTextView = (TextView) convertView
+                .findViewById(R.id.listTitle);
+        listTitleTextView.setTypeface(null, Typeface.BOLD);
+        listTitleTextView.setText(listTitle);
+        return convertView;
+    }
+
+    @Override
+    public boolean hasStableIds() {
         return false;
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent)
-    {
-        String listTitle = (String) this.getGroup(groupPosition);
-        if(convertView == null)
-        {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_group, null);
-        }
-
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
-
-        return convertView;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
-                             View convertView, ViewGroup parent)
-    {
-        final String expandedListText = (String) this.getChild(groupPosition, childPosition);
-        if(convertView == null)
-        {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
-        }
-
-        TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
-        expandedListTextView.setText(expandedListText);
-
-        return convertView;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
+    public boolean isChildSelectable(int listPosition, int expandedListPosition) {
         return true;
     }
 }
