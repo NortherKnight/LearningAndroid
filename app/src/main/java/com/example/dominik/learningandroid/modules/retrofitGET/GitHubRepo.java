@@ -1,4 +1,4 @@
-package com.example.dominik.learningandroid.modules;
+package com.example.dominik.learningandroid.modules.retrofitGET;
 
 /**
  * Created by HP on 28/04/2017.

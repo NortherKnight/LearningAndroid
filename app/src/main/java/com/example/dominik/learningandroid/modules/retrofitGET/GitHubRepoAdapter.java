@@ -1,4 +1,4 @@
-package com.example.dominik.learningandroid.modules;
+package com.example.dominik.learningandroid.modules.retrofitGET;
 
 import android.content.Context;
 import android.view.LayoutInflater;

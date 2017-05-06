@@ -10,9 +10,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.dominik.learningandroid.modules.GitHubClient;
-import com.example.dominik.learningandroid.modules.GitHubRepo;
-import com.example.dominik.learningandroid.modules.GitHubRepoAdapter;
+import com.example.dominik.learningandroid.modules.retrofitGET.GitHubClient;
+import com.example.dominik.learningandroid.modules.retrofitGET.GitHubRepo;
+import com.example.dominik.learningandroid.modules.retrofitGET.GitHubRepoAdapter;
 import com.example.dominik.learningandroid.R;
 
 import java.util.List;
@@ -25,12 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
 {
-
-    private ListView list;
     private Spinner spinner;
-    private String[] modules = {"Retrofit GET request", "Retrofit POST request"};
+    private String[] modules = {"Retrofit GET request"};
 
-    public static final String URL = "http://api.github.com/";
     public static final String DEBUG = "LEARNING";
 
     @Override
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         spinner = (Spinner)findViewById(R.id.spinner_moduleSelect);
-        spinner.setAdapter(new ArrayAdapter<String>(MainActivity.this,
+        spinner.setAdapter(new ArrayAdapter<>(MainActivity.this,
                            R.layout.support_simple_spinner_dropdown_item, modules));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -55,32 +52,6 @@ public class MainActivity extends AppCompatActivity
             public void onNothingSelected(AdapterView<?> parent)
             {
 
-            }
-        });
-
-        list = (ListView)findViewById(R.id.listView_repos);
-
-        Retrofit.Builder builder = new Retrofit.Builder().baseUrl(URL)
-                                                         .addConverterFactory(GsonConverterFactory.create());
-
-        Retrofit retrofit = builder.build();
-        GitHubClient client = retrofit.create(GitHubClient.class);
-        Call<List<GitHubRepo>> call = client.reposForUser("NortherKnight");
-
-        call.enqueue(new Callback<List<GitHubRepo>>()
-        {
-            @Override
-            public void onResponse(Call<List<GitHubRepo>> call, Response<List<GitHubRepo>> response)
-            {
-                List<GitHubRepo> repos = response.body();
-
-                list.setAdapter(new GitHubRepoAdapter(MainActivity.this, repos));
-            }
-
-            @Override
-            public void onFailure(Call<List<GitHubRepo>> call, Throwable t)
-            {
-                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT);
             }
         });
     }
